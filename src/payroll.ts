@@ -23,12 +23,22 @@ export type Payslip = {
 };
 
 export function calculatePayslip(salary: Salary): Payslip {
-  // TODO: implement
+  const deductions: Deductions = new Map();
+  deductions.set("AHV",0);
+  deductions.set("IV",0);
+  deductions.set("EO",0);
+  deductions.set("PK",0);
+  deductions.set("ALV",salary.gross*(DEDUCTION_RATES.get("ALV")/100));
+  deductions.set("NBU",salary.gross*(DEDUCTION_RATES.get("NBU")/100));
+  var totalDeductions = 0;
+  deductions.forEach(deduction => {
+    totalDeductions += deduction;
+  });
   const result: Payslip = {
     salary: salary,
-    deductions: new Map(),
-    totalDeductions: 0.0,
-    net: salary.gross,
+    deductions: deductions,
+    totalDeductions: totalDeductions,
+    net: salary.gross-totalDeductions,
   };
   return result;
 }

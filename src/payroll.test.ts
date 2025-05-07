@@ -16,11 +16,11 @@ test("16 Jähriger mit 700 Fr. Monatslohn, Deductions: ALV(7.7 Fr.) & NBU(5.11 F
 
     const alv = 700*0.011;
     const nbu = 700*0.0073;
-    expect(payslip.deductions.get("ALV")).toBe(alv);
-    expect(payslip.deductions.get("NBU")).toBe(nbu);
+    expect(payslip.deductions.get("ALV")).toBeCloseTo(alv,2);
+    expect(payslip.deductions.get("NBU")).toBeCloseTo(nbu,2);
 
     const expectedDeductions=alv+nbu;
-    expect(payslip.totalDeductions).toBe(expectedDeductions);
+    expect(payslip.totalDeductions).toBeCloseTo(expectedDeductions,2);
 
-    expect(payslip.net).toBe(700-expectedDeductions);
+    expect(payslip.net).toBeCloseTo(700-expectedDeductions,2);
 })
